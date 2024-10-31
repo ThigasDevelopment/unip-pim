@@ -1,6 +1,6 @@
-#ifndef CONFIG
-#define CONFIG
+#ifndef CONFIG_H
+#define CONFIG_H
 
-int MAX_BUFFER_SIZE;
+#define MAX_BUFFER_SIZE 1024
 
 #endif
