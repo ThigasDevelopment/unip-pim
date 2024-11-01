@@ -1,179 +1,84 @@
-// import's system's
-#include "cJSON.h"
 #include "config.h"
 
-#include <stdio.h>
+#include <conio.h>
 
-#include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 
+#include <locale.h>
 #include <unistd.h>
 
-// struct's system's
-typedef struct
-{
-    char name[25];
-    char pass[25];
-} User;
+int MENU_WINDOW = 0;
+int MENU_RUNNING = 1;
 
-// method's system's
-char* readFile (const char* filename)
-{
-    FILE *file = fopen (filename, "r");
-
-    fseek (file, 0, SEEK_END);
-    long size = ftell (file);
-    fseek (file, 0, SEEK_SET);
-
-    char *content = malloc (size + 1);
-    fread (content, 1, size, file);
-    content[size] = '\0';
-
-    fclose (file);
-
-    return content;
+int getMenu () {
+    return MENU_WINDOW;
 }
 
-User findUser (const char *array, const char *search)
-{
-    User new_user = { "", "" };
+int setMenu (int new) {
+    const int old = getMenu ();
 
-    cJSON *users = cJSON_Parse (array);
+    if (old != new) {
+        MENU_WINDOW = new;
 
-    if (users == NULL)
-    {
-        return new_user;
+        system (CLEAR_COMMAND);
+
+        return 0;
     }
 
-    int size = cJSON_GetArraySize (users);
+    return 1;
+}
 
-    for (int i = 0; i < size; i++)
-    {
-        cJSON *item = cJSON_GetArrayItem (users, i);
+int display (int menu) {
+    if (menu < 0 || menu > 2) return 1;
 
-        cJSON *name = cJSON_GetObjectItem (item, "name");
-        cJSON *pass = cJSON_GetObjectItem (item, "pass");
+    int choice;
+    choice = 0;
 
-        if (strcmp (name->valuestring, search) == 0)
-        {
-            strcpy (new_user.name, name->valuestring);
-            strcpy (new_user.pass, pass->valuestring);
+    printf ("Hortifruti %s\n\n", HORTIFRUIT_NAME);
 
-            break;
+    if (menu == 0) {
+        char *options[] = {
+            "Entrar como: Administrador",
+            "Entrar como: Cliente",
+            "Sair"
+        };
+
+        int options_size = sizeof (options) / sizeof (char *);
+
+        for (int i = 0; i < options_size; i++) {
+            printf ("[%d] = %s\n", (i + 1), options[i]);
         }
+
+        printf ("\nEscolha sua opcao: ");
+        scanf ("%d", &choice);
+        getchar ();
+
+        if (choice != options_size) {
+            setMenu (choice);
+        } else {
+            MENU_RUNNING = 0;
+        }
+    } else if (menu == 1) {
+        
     }
 
-    cJSON_Delete (users);
-
-    return new_user;
+    return 0;
 }
 
 int main () {
     system (CLEAR_COMMAND);
+    setlocale (LC_ALL, "");
 
-    int option;
-    option = 0;
-
-    while (option < 1 || option > 3)
-    {
-        printf ("Bem - vindo(a) ao Hortifruti %s, escolha uma opcao abaixo:\n\n", HORTIFRUIT_NAME);
-
-        printf ("[1] Entrar como: Administrador.\n");
-        printf ("[2] Entrar como: Cliente.\n");
-
-        printf ("[3] Sair.\n\n");
-
-        printf ("Escolha sua opcao: ");
-        scanf ("%d", &option);
-        getchar ();
-
-        system (CLEAR_COMMAND);
+    while (MENU_RUNNING) {
+        int current = getMenu ();
+        display (current);
     }
 
-    if (option == 3)
-    {
-        system (CLEAR_COMMAND);
+    printf ("\nSaindo do Hortifruti, volte sempre !");
 
-        printf ("Saindo do Hortifruti, obrigado pela sua visita !");
-        sleep (TIME_TO_EXIT);
+    sleep (TIME_TO_EXIT);
+    system ("exit");
 
-        system ("exit");
-
-        return 1;
-    }
-
-    if (option == 1)
-    {
-        system (CLEAR_COMMAND);
-
-        char admin_name[25];
-        char admin_pass[25];
-
-        printf ("Informe o login: ");
-        fgets (admin_name, 25, stdin);
-        admin_name[strcspn (admin_name, "\n")] = '\0';
-
-        printf ("Informe a senha: ");
-        fgets (admin_pass, 25, stdin);
-        admin_pass[strcspn (admin_pass, "\n")] = '\0';
-
-        char *content = readFile ("src/users/admins.json");
-
-        User user = findUser (content, admin_name);
-        free (content);
-
-        if (strlen (user.name) < 1)
-        {
-            printf ("\nUsuario nao encontrado.");
-
-            return 1;
-        }
-
-        if (strcmp (user.pass, admin_pass) != 0)
-        {
-            printf ("\nSenha incorreta.");
-
-            return 1;
-        }
-
-        printf ("\nLogado com sucesso, bem - vindo(a) de volta %s.", user.name);
-    }
-    else if (option == 2)
-    {
-        system (CLEAR_COMMAND);
-
-        char user_name[25];
-        char user_pass[25];
-
-        printf ("Informe o login: ");
-        fgets (user_name, 25, stdin);
-        user_name[strcspn (user_name, "\n")] = '\0';
-
-        printf ("Informe a senha: ");
-        fgets (user_pass, 25, stdin);
-        user_pass[strcspn (user_pass, "\n")] = '\0';
-
-        char *content = readFile ("src/users/customers.json");
-
-        User user = findUser (content, user_name);
-        free (content);
-
-        if (strlen (user.name) < 1)
-        {
-            printf ("\nUsuario nao encontrado.");
-
-            return 1;
-        }
-
-        if (strcmp (user.pass, user_pass) != 0)
-        {
-            printf ("\nSenha incorreta.");
-
-            return 1;
-        }
-
-        printf ("\nLogado com sucesso, bem - vindo(a) de volta %s.", user.name);
-    }
-    
     return 0;
 }
