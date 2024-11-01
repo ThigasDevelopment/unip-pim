@@ -7,4 +7,10 @@
 #define TIME_TO_EXIT 3 // Time in seconds.
 #define TIME_TO_CHANGE 2 // Time in seconds.
 
+#ifdef __linux__
+    #define CLEAR_COMMAND "clear"
+#elif _WIN32
+    #define CLEAR_COMMAND "cls"
+#endif
+
 #endif
