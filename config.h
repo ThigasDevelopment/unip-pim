@@ -4,8 +4,8 @@
 #define MAX_BUFFER_SIZE 1024
 #define HORTIFRUIT_NAME "PIM GROUP (7)"
 
-#define TIME_TO_EXIT 3 // Time in seconds.
-#define TIME_TO_CHANGE 2 // Time in seconds.
+#define TIME_TO_EXIT 3
+#define TIME_TO_CHANGE 2
 
 #ifdef __linux__
     #define CLEAR_COMMAND "clear"

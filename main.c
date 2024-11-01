@@ -69,7 +69,7 @@ User findUser (const char *array, const char *search)
 }
 
 int main () {
-    system ("cls");
+    system (CLEAR_COMMAND);
 
     int option;
     option = 0;
@@ -87,12 +87,12 @@ int main () {
         scanf ("%d", &option);
         getchar ();
 
-        system ("cls");
+        system (CLEAR_COMMAND);
     }
 
     if (option == 3)
     {
-        system ("cls");
+        system (CLEAR_COMMAND);
 
         printf ("Saindo do Hortifruti, obrigado pela sua visita !");
         sleep (TIME_TO_EXIT);
@@ -104,7 +104,7 @@ int main () {
 
     if (option == 1)
     {
-        system ("cls");
+        system (CLEAR_COMMAND);
 
         char admin_name[25];
         char admin_pass[25];
@@ -140,7 +140,7 @@ int main () {
     }
     else if (option == 2)
     {
-        system ("cls");
+        system (CLEAR_COMMAND);
 
         char user_name[25];
         char user_pass[25];
