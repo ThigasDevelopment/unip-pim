@@ -1,9 +1,12 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define HORTIFRUIT_NAME "PIM GROUP (7)"
+#define HORTIFRUIT_NAME "PIM"
+
+#define JSON_PATH "src/jsons/hortifruit.json"
 
 #define TIME_TO_EXIT 3
+#define TIME_TO_ACTION 1
 #define TIME_TO_CHANGE 2
 
 #ifdef __linux__

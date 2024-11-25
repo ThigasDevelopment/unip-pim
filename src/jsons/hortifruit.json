@@ -1,0 +1,19 @@
+{
+	"system":	{
+		"balance":	185
+	},
+	"products":	[],
+	"users":	[{
+			"name":	"Thiago",
+			"pass":	"1234",
+			"type":	1
+		}, {
+			"name":	"Joao",
+			"pass":	"1234",
+			"type":	1
+		}, {
+			"name":	"Lucas",
+			"pass":	"1234",
+			"type":	1
+		}]
+}

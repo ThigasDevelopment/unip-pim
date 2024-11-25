@@ -18,7 +18,7 @@ int main () {
         displayMenu (current);
     }
 
-    printf ("\nSaindo do Hortifruti, volte sempre !");
+    printf ("\nSaindo do Hortifruti %s, volte sempre !", HORTIFRUIT_NAME);
 
     sleep (TIME_TO_EXIT);
     system ("exit");
