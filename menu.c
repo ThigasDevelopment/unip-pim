@@ -139,7 +139,7 @@ int displayMenu (int menu) {
                 printf ("\nO caixa nao possui esse valor.");
 
                 sleep (TIME_TO_ACTION);
-                system (CLEAR_COMMAND);
+                setMenu (1);
 
                 return 1;
             }
