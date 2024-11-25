@@ -20,6 +20,24 @@
 			"name":	"Lucas",
 			"pass":	"1234",
 			"type":	1
+		},
+
+		{
+			"name":	"Fernanda",
+			"pass":	"1234",
+			"type":	1
+		},
+
+		{
+			"name":	"Janaina",
+			"pass":	"1234",
+			"type":	1
+		},
+
+		{
+			"name":	"Felipe",
+			"pass":	"1234",
+			"type":	1
 		}
 	]
 }
