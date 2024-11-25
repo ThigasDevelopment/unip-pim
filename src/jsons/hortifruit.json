@@ -38,6 +38,12 @@
 			"name":	"Felipe",
 			"pass":	"1234",
 			"type":	1
+		},
+
+		{
+			"name":	"Rogerio",
+			"pass":	"1234",
+			"type":	1
 		}
 	]
 }
