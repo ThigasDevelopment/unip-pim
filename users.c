@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-Users auth = { "Thiago", "1234", 1 };
+Users auth = { "", "", 0 };
 
 Users findUser (const char *content, const char *search)
 {

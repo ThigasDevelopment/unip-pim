@@ -165,6 +165,74 @@ int displayMenu (int menu) {
             printf ("\nVoce depositou R$%d,00 no caixa.", deposit);
             sleep (TIME_TO_ACTION);
             setMenu (1);
+        } else if (menu == 5) {
+            int products_size;
+            Product* products = getProducts (&products_size);
+
+            if (products_size < 1) {
+                printf ("Nao ha nenhum produto cadastrado no sistema, pressione qualquer tecla para voltar.");
+                getch ();
+
+                setMenu (2);
+
+                return 1;
+            }
+
+            printf ("Produtos:\n");
+
+            for (int i = 0; i < products_size; i++) {
+                Product data = products[i];
+
+                printf ("[%d] = Nome: %s, Quantidade: %d, Preco: %d.00, Fornecedor: %s\n", (i + 1), data.name, data.amount, data.price, data.supplier);
+            }
+
+            printf ("\nPressione qualquer tecla para voltar.");
+            getch ();
+
+            setMenu (2);
+        } else if (menu == 6) {
+            char name[50];
+            printf ("Informe o nome do produto: ");
+            fgets (name, 50, stdin);
+            name[strcspn (name, "\n")] = '\0';
+
+            int price;
+            printf ("Informe o preco do produto: R$");
+            scanf ("%d", &price);
+            getchar ();
+
+            char supplier[50];
+            printf ("Informe o fornecedor do produto: ");
+            fgets (supplier, 50, stdin);
+            supplier[strcspn (supplier, "\n")] = '\0';
+
+            if (createProduct (name, price, supplier) == 0) {
+                printf ("\nO produto [ %s ] foi criado com sucesso.", name);
+            } else {
+                printf ("\nOcorreu um erro ao criar o produto, contate um administrador.");
+            }
+
+            sleep (TIME_TO_ACTION);
+            setMenu (2);
+        } else if (menu == 7) {
+            char name[50];
+            printf ("Informe o nome do produto: ");
+            fgets (name, 50, stdin);
+            name[strcspn (name, "\n")] = '\0';
+
+            char supplier[50];
+            printf ("Informe o fornecedor do produto: ");
+            fgets (supplier, 50, stdin);
+            supplier[strcspn (supplier, "\n")] = '\0';
+
+            if (deleteProduct (name, supplier) == 0) {
+                printf ("\nO produto [ %s ] foi deletado com sucesso.", name);
+            } else {
+                printf ("\nOcorreu um erro ao deletar o produto, confirme as informacoes.");
+            }
+
+            sleep (TIME_TO_ACTION);
+            setMenu (2);
         }
     } else {
         if (menu == 0) {
