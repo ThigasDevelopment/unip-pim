@@ -105,9 +105,10 @@ int displayMenu (int menu) {
             setMenu (realID);
         } else if (menu == 2) {
             Options options[] = {
-                { 5, "Produtos" },
-                { 6, "Registrar" },
-                { 7, "Deletar" },
+                { 5, "Buscar" },
+                { 6, "Produtos" },
+                { 7, "Registrar" },
+                { 8, "Deletar" },
 
                 { 0, "Voltar" }
             };
@@ -166,6 +167,41 @@ int displayMenu (int menu) {
             sleep (TIME_TO_ACTION);
             setMenu (1);
         } else if (menu == 5) {
+            char name[50];
+            printf ("Informe o nome do produto: ");
+            fgets (name, 50, stdin);
+            name[strcspn (name, "\n")] = '\0';
+
+            char supplier[50];
+            printf ("Informe o fornecedor do produto: ");
+            fgets (supplier, 50, stdin);
+            supplier[strcspn (supplier, "\n")] = '\0';
+
+            int index = getProduct (name, supplier);
+
+            if (index == -1) {
+                printf ("\nO produto [ %s ] nao foi encontrado.", name);
+                sleep (TIME_TO_ACTION);
+                setMenu (2);
+
+                return 1;
+            }
+
+            int products_size;
+            Product* products = getProducts (&products_size);
+
+            printf ("\nInformacoes do produto:\n");
+
+            printf ("\nNome: %s", products[index].name);
+            printf ("\nQuantidade: %d", products[index].amount);
+            printf ("\nPreco: %d.00", products[index].price);
+            printf ("\nFornecedor: %s\n", products[index].supplier);
+
+            printf ("\nPressione qualquer tecla para voltar.");
+            getch ();
+
+            setMenu (2);
+        } else if (menu == 6) {
             int products_size;
             Product* products = getProducts (&products_size);
 
@@ -190,7 +226,7 @@ int displayMenu (int menu) {
             getch ();
 
             setMenu (2);
-        } else if (menu == 6) {
+        } else if (menu == 7) {
             char name[50];
             printf ("Informe o nome do produto: ");
             fgets (name, 50, stdin);
@@ -214,7 +250,7 @@ int displayMenu (int menu) {
 
             sleep (TIME_TO_ACTION);
             setMenu (2);
-        } else if (menu == 7) {
+        } else if (menu == 8) {
             char name[50];
             printf ("Informe o nome do produto: ");
             fgets (name, 50, stdin);
