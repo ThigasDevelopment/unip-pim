@@ -136,6 +136,13 @@ int displayMenu (int menu) {
             scanf ("%d", &withdraw);
             getchar ();
 
+            if (withdraw < 1) {
+                printf ("\nVoce nao pode sacar R$0.00.");
+                sleep (TIME_TO_ACTION);
+
+                return 1;
+            }
+
             if (withdraw > balance) {
                 printf ("\nO caixa nao possui esse valor.");
 
@@ -160,6 +167,13 @@ int displayMenu (int menu) {
             printf ("Informe um valor: R$");
             scanf ("%d", &deposit);
             getchar ();
+
+            if (deposit < 1) {
+                printf ("\nVoce nao pode depositar R$0.00.");
+                sleep (TIME_TO_ACTION);
+
+                return 1;
+            }
 
             setBalance (balance + deposit);
 
