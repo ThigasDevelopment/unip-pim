@@ -1,29 +1,25 @@
 {
 	"system":	{
-		"balance":	100000
+		"balance":	0
 	},
-	"products":	[{
-			"name":	"Banana",
-			"amount":	2,
-			"price":	5,
-			"supplier":	"Carrefour"
-		}, {
-			"name":	"Manga",
-			"amount":	1,
-			"price":	5,
-			"supplier":	"Extra"
-		}],
-	"users":	[{
+	"products":	[ ],
+	"users":	[
+		{
 			"name":	"Thiago",
 			"pass":	"1234",
 			"type":	1
-		}, {
+		},
+		
+		{
 			"name":	"Joao",
 			"pass":	"1234",
 			"type":	1
-		}, {
+		},
+		
+		{
 			"name":	"Lucas",
 			"pass":	"1234",
 			"type":	1
-		}]
+		}
+	]
 }
