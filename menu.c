@@ -283,6 +283,11 @@ int displayMenu (int menu) {
 
             sleep (TIME_TO_ACTION);
             setMenu (2);
+        } else {
+            printf ("\nOpcao invalida.");
+
+            sleep (TIME_TO_ACTION);
+            setMenu (0);
         }
     } else {
         if (menu == 0) {
@@ -359,6 +364,11 @@ int displayMenu (int menu) {
             strcpy (auth.password, finded.password);
             auth.administrator = finded.administrator;
 
+            setMenu (0);
+        } else {
+            printf ("\nOpcao invalida.");
+
+            sleep (TIME_TO_ACTION);
             setMenu (0);
         }
     }
