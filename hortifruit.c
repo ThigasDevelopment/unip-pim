@@ -32,13 +32,15 @@ Product* getProducts (int* size) {
         cJSON *amount = cJSON_GetObjectItem (item, "amount");
         cJSON *price = cJSON_GetObjectItem (item, "price");
         cJSON *supplier = cJSON_GetObjectItem (item, "supplier");
+        cJSON *expiration = cJSON_GetObjectItem (item, "expiration_date");
 
         strcpy (all_products[i].name, name -> valuestring);
 
         all_products[i].amount = amount -> valueint;
         all_products[i].price = price -> valuedouble;
 
-        strcpy (all_products[i].supplier, supplier->valuestring);
+        strcpy (all_products[i].supplier, supplier -> valuestring);
+        strcpy (all_products[i].expiration_date, expiration -> valuestring);
     }
 
     cJSON_Delete (hortifruit);
@@ -84,7 +86,7 @@ int getProduct (const char search_name[50], const char search_supplier[50]) {
     return index;
 }
 
-int createProduct (const char name[50], const int price, const char supplier[50]) {
+int createProduct (const char name[50], const int price, const char supplier[50], char expiration_date[11]) {
     char* content = readFile (JSON_PATH);
 
     cJSON *hortifruit = cJSON_Parse (content);
@@ -115,6 +117,7 @@ int createProduct (const char name[50], const int price, const char supplier[50]
         cJSON_AddNumberToObject (new_product, "amount", 1);
         cJSON_AddNumberToObject (new_product, "price", price);
         cJSON_AddStringToObject (new_product, "supplier", supplier);
+        cJSON_AddStringToObject (new_product, "expiration_date", expiration_date);
 
         cJSON_AddItemToArray (products, new_product);
     }

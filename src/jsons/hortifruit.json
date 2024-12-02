@@ -1,44 +1,16 @@
 {
 	"system":	{
-		"balance":	30
+		"balance":	88
 	},
 	"products":	[{
-			"name":	"Morango",
+			"name":	"Banana",
 			"amount":	1,
-			"price":	100,
-			"supplier":	"Sonda"
-		}, {
-			"name":	"Morango",
-			"amount":	1,
-			"price":	50,
-			"supplier":	"Carrefour"
+			"price":	10,
+			"supplier":	"Carrefour",
+			"expiration_date":	"20/11/2025"
 		}],
 	"users":	[{
-			"name":	"Thiago",
-			"pass":	"1234",
-			"type":	1
-		}, {
-			"name":	"Joao",
-			"pass":	"1234",
-			"type":	1
-		}, {
-			"name":	"Lucas",
-			"pass":	"1234",
-			"type":	1
-		}, {
-			"name":	"Fernanda",
-			"pass":	"1234",
-			"type":	1
-		}, {
-			"name":	"Janaina",
-			"pass":	"1234",
-			"type":	1
-		}, {
-			"name":	"Felipe",
-			"pass":	"1234",
-			"type":	1
-		}, {
-			"name":	"Rogerio",
+			"name":	"admin",
 			"pass":	"1234",
 			"type":	1
 		}]

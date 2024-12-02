@@ -8,6 +8,7 @@
 
 #include "config.h"
 
+#include <time.h>
 #include <conio.h>
 #include <stdio.h>
 
@@ -24,6 +25,31 @@ typedef struct {
 
     char name[50];
 } Options;
+
+int isValidDate (const char* date) {
+    struct tm tm;
+    memset (&tm, 0, sizeof (struct tm));
+    
+    // Formato da data: "dd/mm/yyyy"
+    if (sscanf (date, "%d/%d/%d", &tm.tm_mday, &tm.tm_mon, &tm.tm_year) != 3) {
+        return 0; // Formato inválido
+    }
+
+    // Ajuste dos valores da estrutura tm
+    tm.tm_mon -= 1;         // Meses vão de 0 a 11
+    tm.tm_year -= 1900;     // Anos desde 1900
+    tm.tm_hour = 0;
+    tm.tm_min = 0;
+    tm.tm_sec = 0;
+    tm.tm_isdst = -1;       // Detecta automaticamente horário de verão
+
+    // Usa mktime para validar a data
+    if (mktime(&tm) == -1) {
+        return 0; // Data inválida
+    }
+
+    return 1; // Data válida
+}
 
 int getMenu () {
     return MENU_WINDOW;
@@ -106,7 +132,7 @@ int displayMenu (int menu) {
         } else if (menu == 2) {
             Options options[] = {
                 { 5, "Buscar" },
-                { 6, "Produtos" },
+                { 6, "Estoque" },
                 { 7, "Registrar" },
                 { 8, "Deletar" },
 
@@ -138,7 +164,9 @@ int displayMenu (int menu) {
 
             if (withdraw < 1) {
                 printf ("\nVoce nao pode sacar R$0.00.");
+
                 sleep (TIME_TO_ACTION);
+                setMenu (1);
 
                 return 1;
             }
@@ -155,6 +183,7 @@ int displayMenu (int menu) {
             setBalance (balance - withdraw);
 
             printf ("\nVoce sacou R$%d,00 do caixa.", withdraw);
+
             sleep (TIME_TO_ACTION);
             setMenu (1);
         } else if (menu == 4) {
@@ -170,7 +199,9 @@ int displayMenu (int menu) {
 
             if (deposit < 1) {
                 printf ("\nVoce nao pode depositar R$0.00.");
+
                 sleep (TIME_TO_ACTION);
+                setMenu (1);
 
                 return 1;
             }
@@ -178,6 +209,7 @@ int displayMenu (int menu) {
             setBalance (balance + deposit);
 
             printf ("\nVoce depositou R$%d,00 no caixa.", deposit);
+
             sleep (TIME_TO_ACTION);
             setMenu (1);
         } else if (menu == 5) {
@@ -209,7 +241,8 @@ int displayMenu (int menu) {
             printf ("\nNome: %s", products[index].name);
             printf ("\nQuantidade: %d", products[index].amount);
             printf ("\nPreco: %d.00", products[index].price);
-            printf ("\nFornecedor: %s\n", products[index].supplier);
+            printf ("\nFornecedor: %s", products[index].supplier);
+            printf ("\nData de validade: %s\n", products[index].expiration_date);
 
             printf ("\nPressione qualquer tecla para voltar.");
             getch ();
@@ -233,7 +266,7 @@ int displayMenu (int menu) {
             for (int i = 0; i < products_size; i++) {
                 Product data = products[i];
 
-                printf ("[%d] = Nome: %s, Quantidade: %d, Preco: %d.00, Fornecedor: %s\n", (i + 1), data.name, data.amount, data.price, data.supplier);
+                printf ("[%d] = Nome: %s, Quantidade: %d, Preco: %d.00, Fornecedor: %s, Data de validade: %s\n", (i + 1), data.name, data.amount, data.price, data.supplier, data.expiration_date);
             }
 
             printf ("\nPressione qualquer tecla para voltar.");
@@ -256,7 +289,21 @@ int displayMenu (int menu) {
             fgets (supplier, 50, stdin);
             supplier[strcspn (supplier, "\n")] = '\0';
 
-            if (createProduct (name, price, supplier) == 0) {
+            char expiration_date[50];
+            printf ("Informe a data de validade do produto: ");
+            fgets (expiration_date, 50, stdin);
+            expiration_date[strcspn (expiration_date, "\n")] = '\0';
+
+            if (isValidDate (expiration_date) != 1) {
+                printf ("\nFormato da data de validade invalido (DD/MM/AAAA).");
+
+                sleep (TIME_TO_ACTION);
+                setMenu (2);
+
+                return 1;
+            }
+
+            if (createProduct (name, price, supplier, expiration_date) == 0) {
                 printf ("\nO produto [ %s ] foi criado com sucesso.", name);
             } else {
                 printf ("\nOcorreu um erro ao criar o produto, contate um administrador.");
