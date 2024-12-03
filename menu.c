@@ -111,8 +111,9 @@ int displayMenu (int menu) {
             printf ("Valor no caixa: %d,00\n\n", balance);
 
             Options options[] = {
-                { 3, "Sacar" },
-                { 4, "Depositar" },
+                { 3, "Vender" },
+                { 4, "Sacar" },
+                { 5, "Depositar" },
 
                 { 0, "Voltar" }
             };
@@ -131,10 +132,10 @@ int displayMenu (int menu) {
             setMenu (realID);
         } else if (menu == 2) {
             Options options[] = {
-                { 5, "Buscar" },
-                { 6, "Estoque" },
-                { 7, "Registrar" },
-                { 8, "Deletar" },
+                { 6, "Buscar" },
+                { 7, "Estoque" },
+                { 8, "Registrar" },
+                { 9, "Deletar" },
 
                 { 0, "Voltar" }
             };
@@ -152,6 +153,54 @@ int displayMenu (int menu) {
             int realID = options[(choice - 1)].id;
             setMenu (realID);
         } else if (menu == 3) {
+            char name[50];
+            printf ("Informe o nome do produto: ");
+            fgets (name, 50, stdin);
+            name[strcspn (name, "\n")] = '\0';
+
+            char supplier[50];
+            printf ("Informe o fornecedor do produto: ");
+            fgets (supplier, 50, stdin);
+            supplier[strcspn (supplier, "\n")] = '\0';
+
+            int amount;
+            printf ("Informe a quantidade do produto: ");
+            scanf ("%d", &amount);
+            getchar ();
+
+            int index = getProduct (name, supplier);
+
+            if (index == -1) {
+                printf ("\nO produto [ %s ] nao foi encontrado.", name);
+                sleep (TIME_TO_ACTION);
+                setMenu (1);
+
+                return 1;
+            }
+
+            int products_size;
+            Product* products = getProducts (&products_size);
+
+            if (amount > products[index].amount) {
+                printf ("\nO produto [ %s ] nao possui essa quantidade em estoque.", name);
+                sleep (TIME_TO_ACTION);
+                setMenu (1);
+
+                return 1;
+            }
+
+            setProductAmount (name, supplier, (products[index].amount - amount));
+
+            int price;
+            price = (amount * products[index].price);
+
+            int balance = getBalance ();
+            setBalance (balance + price);
+
+            printf ("\nVoce vendeu x%d do produto [ %s ] por R$%d.00.", amount, name, price);
+            sleep (TIME_TO_ACTION);
+            setMenu (1);
+        } else if (menu == 4) {
             int balance = getBalance ();
             printf ("Valor no caixa: %d,00\n\n", balance);
 
@@ -186,7 +235,7 @@ int displayMenu (int menu) {
 
             sleep (TIME_TO_ACTION);
             setMenu (1);
-        } else if (menu == 4) {
+        } else if (menu == 5) {
             int balance = getBalance ();
             printf ("Valor no caixa: %d,00\n\n", balance);
 
@@ -212,7 +261,7 @@ int displayMenu (int menu) {
 
             sleep (TIME_TO_ACTION);
             setMenu (1);
-        } else if (menu == 5) {
+        } else if (menu == 6) {
             char name[50];
             printf ("Informe o nome do produto: ");
             fgets (name, 50, stdin);
@@ -248,7 +297,7 @@ int displayMenu (int menu) {
             getch ();
 
             setMenu (2);
-        } else if (menu == 6) {
+        } else if (menu == 7) {
             int products_size;
             Product* products = getProducts (&products_size);
 
@@ -273,7 +322,7 @@ int displayMenu (int menu) {
             getch ();
 
             setMenu (2);
-        } else if (menu == 7) {
+        } else if (menu == 8) {
             char name[50];
             printf ("Informe o nome do produto: ");
             fgets (name, 50, stdin);
@@ -315,7 +364,7 @@ int displayMenu (int menu) {
 
             sleep (TIME_TO_ACTION);
             setMenu (2);
-        } else if (menu == 8) {
+        } else if (menu == 9) {
             char name[50];
             printf ("Informe o nome do produto: ");
             fgets (name, 50, stdin);

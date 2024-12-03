@@ -164,6 +164,46 @@ int deleteProduct (const char name[50], const char supplier[50]) {
     return 0;
 }
 
+int setProductAmount (const char name[50], const char supplier[50], const int new_amount) {
+    char* content = readFile (JSON_PATH);
+
+    cJSON *hortifruit = cJSON_Parse (content);
+
+    if (hortifruit == NULL) {
+        cJSON_Delete (hortifruit);
+
+        return 1;
+    }
+
+    free (content);
+
+    int index = getProduct (name, supplier);
+    cJSON *products = cJSON_GetObjectItem (hortifruit, "products");
+
+    if (index == -1) {
+        cJSON_Delete (hortifruit);
+
+        return 1;
+    }
+
+    if (new_amount < 1) {
+        cJSON_DeleteItemFromArray (products, index);
+    } else {
+        cJSON *item = cJSON_GetArrayItem (products, index);
+        cJSON *amount = cJSON_GetObjectItem (item, "amount");
+
+        cJSON_SetNumberValue (amount, new_amount);
+    }
+
+    char *new_content = cJSON_Print (hortifruit);
+    writeFile (new_content);
+    free (new_content);
+
+    cJSON_Delete (hortifruit);
+
+    return 0;
+}
+
 int getBalance () {
     char* content = readFile (JSON_PATH);
 

@@ -1,16 +1,10 @@
 {
 	"system":	{
-		"balance":	88
+		"balance":	168
 	},
 	"products":	[{
 			"name":	"Banana",
-			"amount":	1,
-			"price":	10,
-			"supplier":	"Carrefour",
-			"expiration_date":	"20/11/2025"
-		}, {
-			"name":	"Banana",
-			"amount":	30,
+			"amount":	20,
 			"price":	5,
 			"supplier":	"Sonda",
 			"expiration_date":	"20/05/2024"
