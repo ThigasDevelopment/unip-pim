@@ -282,6 +282,10 @@ int displayMenu (int menu) {
             int price;
             printf ("Informe o preco do produto: R$");
             scanf ("%d", &price);
+
+            int amount;
+            printf ("Informe a quantidade inicial do produto: ");
+            scanf ("%d", &amount);
             getchar ();
 
             char supplier[50];
@@ -303,7 +307,7 @@ int displayMenu (int menu) {
                 return 1;
             }
 
-            if (createProduct (name, price, supplier, expiration_date) == 0) {
+            if (createProduct (name, amount, price, supplier, expiration_date) == 0) {
                 printf ("\nO produto [ %s ] foi criado com sucesso.", name);
             } else {
                 printf ("\nOcorreu um erro ao criar o produto, contate um administrador.");

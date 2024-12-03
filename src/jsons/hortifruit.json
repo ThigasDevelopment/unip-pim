@@ -8,6 +8,12 @@
 			"price":	10,
 			"supplier":	"Carrefour",
 			"expiration_date":	"20/11/2025"
+		}, {
+			"name":	"Banana",
+			"amount":	30,
+			"price":	5,
+			"supplier":	"Sonda",
+			"expiration_date":	"20/05/2024"
 		}],
 	"users":	[{
 			"name":	"admin",

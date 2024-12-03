@@ -86,7 +86,7 @@ int getProduct (const char search_name[50], const char search_supplier[50]) {
     return index;
 }
 
-int createProduct (const char name[50], const int price, const char supplier[50], char expiration_date[11]) {
+int createProduct (const char name[50], const int amount, const int price, const char supplier[50], char expiration_date[11]) {
     char* content = readFile (JSON_PATH);
 
     cJSON *hortifruit = cJSON_Parse (content);
@@ -114,7 +114,7 @@ int createProduct (const char name[50], const int price, const char supplier[50]
         cJSON *new_product = cJSON_CreateObject ();
 
         cJSON_AddStringToObject (new_product, "name", name);
-        cJSON_AddNumberToObject (new_product, "amount", 1);
+        cJSON_AddNumberToObject (new_product, "amount", amount);
         cJSON_AddNumberToObject (new_product, "price", price);
         cJSON_AddStringToObject (new_product, "supplier", supplier);
         cJSON_AddStringToObject (new_product, "expiration_date", expiration_date);
